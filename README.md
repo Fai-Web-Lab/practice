@@ -7,8 +7,9 @@
 - [File States & Lifecycle](#3-file-states--lifecycle)
 - [Advanced Command Reference](#4-advanced-command-reference)
 - [Branching, Merging & History Rewriting](#5-branching-merging--history-rewriting)
-- [Stashing & Work in Progress (WIP)](#6-stashing--wip)
+- [Stashing & Work in Progress (WIP)](#6-stashing--work-in-progress-wip)
 - [GitHub Collaboration](#7-github-collaboration)
+- [Author](#author)
 
 ---
 
@@ -26,7 +27,7 @@ The system receives an input, processes it, calls the necessary function, and re
 
 - `GUI` (Graphical User Interface): The graphical interface focuses on simplicity and usability.  
 
-Users interact with the system through:  
+Users interact with the system through:
 - buttons
 - menus
 - visual components
@@ -62,49 +63,41 @@ Git is not just a version control tool. Internally, Git behaves like a **content
 
 - SHA-1 Hash
 
-A **40-character hexadecimal string** uniquely identifies each Git object.
+A **40-characters** uniquely identifies each Git object.
 
-Example:
-
-
-e83c5163316f89bfbde7d9ab23ca2e25604af290
-
+Example:  
+`e83c5163316f89bfbde7d9ab23ca2e25604af290`
 
 ---
 
-## Storage Optimization
+- Storage Optimization
 
 Git organizes objects efficiently.
 
 - The first **2 characters** of the hash create a directory
 - The remaining **38 characters** form the file name
 
-Example:
-
-
-.git/objects/e8/3c5163316f89bfbde7d9ab23ca2e25604af290
-
-
+Example:  
+`.git/objects/e8/3c5163316f89bfbde7d9ab23ca2e25604af290`  
 This prevents having too many files in a single directory.
 
 ---
 
-## Compression
+- Compression
 
 Git compresses stored objects to:
-
 - save disk space
 - maintain data integrity
 
 ---
 
-## The Four Fundamental Git Objects
+### The Four Fundamental Git Objects
 
 Git stores data using four main object types.
 
-### Blob
+-  Blob
 
-A **Blob (Binary Large Object)** stores the **actual file content**.
+A Blob (Binary Large Object) stores the **actual file content**.
 
 It does not include:
 
@@ -113,9 +106,9 @@ It does not include:
 
 ---
 
-### Tree
+- Tree
 
-A **Tree object** represents a directory.
+A Tree object represents **a directory**.
 
 It stores references (hashes) to:
 
@@ -124,9 +117,9 @@ It stores references (hashes) to:
 
 ---
 
-### Commit
+- Commit
 
-A **Commit** represents a snapshot of the project at a specific moment.
+A Commit represents a **snapshot of the projec**t at a **specific moment**.
 
 It contains metadata such as:
 
@@ -137,21 +130,18 @@ It contains metadata such as:
 - Pointer to the tree object
 
 ---
+- Tag
 
-### Tag
-
-A **Tag** is a permanent reference to a specific commit ID.
+A Tag is a permanent reference to a **specific commit ID**.
 
 Tags do not move and are typically used for:
 
 - releases
 - version labels
 
-Example:
-
-
-v1.0
-v2.0
+Example:  
+`v1.0
+v2.0`
 
 
 ---
@@ -168,15 +158,10 @@ Working Directory → Staging Area → Repository
 
 ## Untracked
 
-Files that Git has never seen before.
+Files that Git has never seen before. They are not included in commits.
 
-They are not included in commits.
-
-You can exclude files using:
-
-
-.gitignore
-
+You can exclude files using:  
+`.gitignore`
 
 ---
 
@@ -198,153 +183,227 @@ Files that have been moved to the **staging area** and are ready for commit.
 
 Example:
 
-```bash
+```
 git add file.txt
-4. Advanced Command Reference
-Configuration & Setup
+```
+
+## 4. Advanced Command Reference
+
+- Configuration & Setup
 
 Initialize a repository:
 
+```
 git init
+```
 
 Configure Git identity:
 
+```
 git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
+```
 
-Customize command prompt:
+---
 
-export PS1="dev: "
-Committing & Inspecting
+- Committing & Inspecting
 
 Commit staged files:
 
+```
 git commit -m "message"
+```
 
 Shortcut to stage and commit modified files:
 
+```
 git commit -a -m "msg"
+```
 
 Modify the last commit:
 
+```
 git commit --amend
+```
 
 View commit history in short format:
 
+```
 git log --oneline
+```
 
 View differences between files:
 
+```
 git diff
+```
 
 Check the type of a Git object:
 
-git cat-file -t <hash>
-5. Branching, Merging & History Rewriting
-Branching
+```
+git cat-file -t <hash number>
+```
+
+---
+
+## 5. Branching, Merging & History Rewriting
+
+- Branching
 
 Branches allow parallel development.
 
 Create and switch to a new branch:
 
+```
 git checkout -b <branch-name>
-Merging
-Fast-Forward Merge
+```
 
-Occurs when the main branch has not diverged.
+---
 
+- Merging
+
+**Fast-Forward Merge**
+
+Occurs when the main branch has not diverged.  
 Git simply moves the branch pointer forward.
 
-3-Way Merge
+**3-Way Merge**
 
-Occurs when branches have different histories.
+Occurs when branches have different histories.  
+Git creates a **new merge commit** combining both branches.
 
-Git creates a new merge commit combining both branches.
+---
 
-Reset (History Rewriting)
-Soft Reset
+- Reset (History Rewriting)
+
+**Soft Reset**
+
+```
 git reset --soft HEAD~1
+```
 
-Removes the commit but keeps changes staged.
+Removes the commit but **keeps changes staged**.
 
-Mixed Reset
+---
+
+**Mixed Reset**
+
+```
 git reset --mixed HEAD~1
+```
 
-Removes the commit and unstages the changes, but keeps them in the working directory.
+Removes the commit and **unstages the changes**, but keeps them in the working directory.
 
-Hard Reset
+---
+
+**Hard Reset**
+
+```
 git reset --hard HEAD~1
+```
 
-Deletes the commit and all associated changes permanently.
+Deletes the commit and **all associated changes permanently**.
 
-Cherry-Pick
+---
+
+**Cherry-Pick**
 
 Apply a specific commit to the current branch.
 
+```
 git cherry-pick <commit-id>
-Rebase
+```
+
+---
+
+**Rebase**
 
 Rebase changes the base of your branch to another branch head.
 
+```
 git rebase main
+```
 
-This helps create a clean and linear history.
+This helps create a **clean and linear history**.
 
-6. Stashing & Work in Progress (WIP)
+---
 
-When work is not ready to commit, Git allows you to temporarily store it.
+## 6. Stashing & Work in Progress (WIP)
 
-Save Work
+When work is **not ready to commit**, Git allows you to temporarily store it.
+
+### Save Work
+
+```
 git stash
+```
 
 Moves current changes to a temporary stack.
 
-Restore Work
+---
+
+### Restore Work
 
 Restore and remove the latest stash:
 
+```
 git stash pop
+```
 
 Restore but keep a copy in the stash:
 
+```
 git stash apply
-7. GitHub Collaboration
+```
+
+---
+
+## 7. GitHub Collaboration
 
 GitHub enables collaborative development on top of Git.
 
-Fork
+### Fork
 
-A fork creates a copy of a repository under another GitHub account.
+A **fork** creates a copy of a repository under another GitHub account.
 
-Clone
+---
+
+### Clone
 
 Creates a local copy of a repository.
 
+```
 git clone <repository-url>
-Pull Request (PR)
+```
+
+---
+
+### Pull Request (PR)
 
 A Pull Request is used to propose changes to the original repository.
 
 Typical workflow:
 
-Fork the repository
+1. Fork the repository  
+2. Clone it locally  
+3. Create a branch  
+4. Make changes  
+5. Push the branch  
+6. Open a Pull Request  
 
-Clone it locally
+---
 
-Create a branch
-
-Make changes
-
-Push the branch
-
-Open a Pull Request
-
-Remote Connections
+### Remote Connections
 
 Git repositories communicate using remote connections.
 
 Typical structure:
 
+```
 Local Repository (Downstream)
         ↓
 Remote Repository (Upstream)
+```
+
+## Author
+Fai Al-Sharekh.
